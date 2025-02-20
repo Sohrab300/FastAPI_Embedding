@@ -11,3 +11,4 @@ env/
 # Optionally ignore data, logs, or other temporary files
 data/
 logs/
+.DS_Store
