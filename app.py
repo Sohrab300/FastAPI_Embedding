@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
+from sentence_transformers import SentenceTransformer
 
 app = FastAPI()
 
@@ -7,14 +9,12 @@ app = FastAPI()
 def read_root():
     return {"status": "OK"}
 
-# Your existing /embed endpoint
-from pydantic import BaseModel
-from sentence_transformers import SentenceTransformer
-
-model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
-
+# Define request schema for embedding
 class TextRequest(BaseModel):
     text: str
+
+# Load your embedding model once at startup
+model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
 @app.post("/embed")
 async def get_embedding(request: TextRequest):
